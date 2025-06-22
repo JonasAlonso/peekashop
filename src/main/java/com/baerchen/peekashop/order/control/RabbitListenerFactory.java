@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitListenerFactory {
 
+
+
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
@@ -55,7 +57,6 @@ public class RabbitListenerFactory {
         factory.setMaxConcurrentConsumers(concurrency1);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
         factory.setPrefetchCount(prefetch);
-
         return factory;
     }
 

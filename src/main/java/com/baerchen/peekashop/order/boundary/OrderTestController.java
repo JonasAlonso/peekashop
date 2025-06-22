@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.Random;
 import java.util.UUID;
 
-import static com.baerchen.peekashop.order.boundary.PriorityQueueConfig.MAX_PRIORITY;
+import static com.baerchen.peekashop.order.control.QueueConfig.MAX_PRIORITY;
 
 @Slf4j
 @RestController
