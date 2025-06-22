@@ -1,6 +1,8 @@
 package com.baerchen.peekashop.order.control;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -10,8 +12,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class RabbitListenerFactory {
 
+    private final RabbitListenerProperties rabbitListenerProperties;
 
 
     @Bean
@@ -24,14 +28,25 @@ public class RabbitListenerFactory {
     @Bean
     public SimpleRabbitListenerContainerFactory standardListenerFactory(ConnectionFactory connectionFactory){
         log.info("creating standardListenerFactory");
-        return getSimpleRabbitListenerContainerFactory(connectionFactory, 1, 1, 10);
+        var standard = rabbitListenerProperties.getStandard();
+        return getSimpleRabbitListenerContainerFactory(
+                connectionFactory,
+                standard.getConcurrency(),
+                standard.getMaxConcurrency(),
+                standard.getPrefetch()
+        );
     }
 
     @Bean
     public SimpleRabbitListenerContainerFactory dlqListenerFactory(ConnectionFactory connectionFactory){
         log.info("creating dlqListenerFactory");
-
-        return getSimpleRabbitListenerContainerFactory(connectionFactory, 1, 1, 10);
+        var dlq = rabbitListenerProperties.getDlq();
+        return getSimpleRabbitListenerContainerFactory(
+                connectionFactory,
+                dlq.getConcurrency(),
+                dlq.getMaxConcurrency(),
+                dlq.getPrefetch()
+        );
     }
 
     @Bean
