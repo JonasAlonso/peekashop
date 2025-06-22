@@ -1,7 +1,6 @@
 package com.baerchen.peekashop.order.boundary;
 
 import com.baerchen.peekashop.order.entity.Order;
-import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 

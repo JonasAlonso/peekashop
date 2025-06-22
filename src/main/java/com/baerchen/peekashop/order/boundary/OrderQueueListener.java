@@ -1,7 +1,6 @@
 package com.baerchen.peekashop.order.boundary;
 
 import com.baerchen.peekashop.order.control.OrderDispatcher;
-import com.baerchen.peekashop.order.control.OrderMetricsService;
 import com.baerchen.peekashop.order.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +34,6 @@ public class OrderQueueListener {
             orderService.rejectOrder(order.getCorrelationId());
         } catch (Exception e) {
             log.error("💥 Failed to process DLQ message: {}", order, e);
-            // Do NOT throw — swallow the exception!
         }
     }
 
@@ -44,13 +42,8 @@ public class OrderQueueListener {
     public void handleRealtime(Order order) throws InterruptedException {
         log.info("⚡ [REALTIME] Received order: {}", order.getCorrelationId());
         log.info("⚡ [REALTIME] [{}] Handling: {}", Thread.currentThread().getName(), order.getCorrelationId());
-
         Thread.sleep(4_000); // 5
-
-
         dispatcher.process(order, false);
-
-
     }
 
     @RabbitListener(queues = "order.create.bulk", containerFactory = "bulkContainerFactory")

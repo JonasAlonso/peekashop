@@ -1,4 +1,4 @@
-package com.baerchen.peekashop.runtime;
+package com.baerchen.peekashop.order.entity;
 
 public abstract class BaseDataTransferObject {
 }

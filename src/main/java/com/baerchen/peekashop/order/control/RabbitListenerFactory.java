@@ -1,4 +1,4 @@
-package com.baerchen.peekashop.runtime.listener.boundary;
+package com.baerchen.peekashop.order.control;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;

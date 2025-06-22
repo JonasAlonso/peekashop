@@ -1,0 +1,67 @@
+{
+  "title": "Peekashop Order Dashboard",
+  "uid": "peekashop-orders",
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "\ud83d\udce6 Orders Processed per Queue",
+      "id": 1,
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum by(queue) (rate(orders_processed_total[1m]))",
+          "legendFormat": "{{queue}}",
+          "refId": "A"
+        }
+      ],
+      "xaxis": {
+        "mode": "time"
+      },
+      "yaxes": [
+        {
+          "format": "short"
+        },
+        {
+          "format": "short"
+        }
+      ],
+      "lines": true,
+      "fill": 1
+    },
+    {
+      "type": "heatmap",
+      "title": "\ud83d\udd25 Priority Heatmap (Order Processing Duration)",
+      "id": 2,
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(orders_processing_duration_bucket[5m])) by (le, priority))",
+          "legendFormat": "{{priority}}",
+          "refId": "B"
+        }
+      ],
+      "xaxis": {
+        "mode": "time"
+      },
+      "yaxis": {
+        "format": "short",
+        "label": "priority"
+      },
+      "color": {
+        "mode": "heatmap",
+        "scale": "linear",
+        "scheme": "interpolateTurbo"
+      }
+    }
+  ],
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  }
+}
