@@ -23,6 +23,17 @@ spring:
       hibernate:
         format_sql: true
 
+rabbitmq:
+  listener:
+    standard:
+      concurrency: 1
+      max-concurrency: 1
+      prefetch: 10
+    dlq:
+      concurrency: 1
+      max-concurrency: 1
+      prefetch: 10
+
 management:
   endpoints:
     web:
